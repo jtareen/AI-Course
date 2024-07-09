@@ -1,10 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import math
+import math, os
+import pandas as pd
+
+data = pd.read_csv('E:/Courses/AI deeplearning.AI/Course 1/module 1/linear regression/advertising.csv')
 
 # data set
-x_train = np.array([1.0, 2.0])   #features
-y_train = np.array([300.0, 500.0])   #target value
+x = np.array(data['TV'])
+y = np.array(data['Sales'])
+
+x_train = x / x.max()
+y_train = y / y.max()
 
 def pred_func(x, w, b):
     return w * x + b
@@ -49,13 +55,13 @@ def plot(x, y, w, b):
     plt.ylabel('output')
 
     plt.legend()
-
+ 
     plt.show()
 
 w_init = 0
 b_init = 0
 iterations = 10000
-tmp_alpha = 1.0e-2
+tmp_alpha = 1.0e-1
 w_final, b_final = gradient_descent(x_train ,y_train, w_init, b_init, tmp_alpha, 
                                                     iterations)
 print(f"(w,b) found by gradient descent: ({w_final:8.4f},{b_final:8.4f})")
