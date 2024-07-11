@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import os
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, 'advertising.csv')
+csv_path = os.path.join(script_dir, 'data/advertising.csv')
 
 data = pd.read_csv(csv_path)
 

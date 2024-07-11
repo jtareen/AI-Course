@@ -1,3 +1,4 @@
+from sklearn.metrics import r2_score
 import numpy as np
 import math, os
 import matplotlib.pyplot as plt
@@ -14,7 +15,6 @@ independent_vars = ['Hours Studied','Previous Scores','Extracurricular Activitie
 
 X_train = data[independent_vars].to_numpy()
 y_train = np.array(data['Performance Index'])
-
 
 def pred_func(x, w, b):
     p = np.dot(x,w) + b
@@ -105,11 +105,10 @@ alpha = 9.0e-5
 w_final, b_final, cost_history = gradient_descent(X_train, y_train, initial_w, initial_b, alpha, iterations)
 print(f"b,w found by gradient descent: {b_final:0.2f},{w_final} ")
 m,_ = X_train.shape
-predicted_values = []
-actual_values = []
-for i in range(0, m, 500):
-    predicted_values.append(np.dot(X_train[i], w_final) + b_final)
-    actual_values.append(y_train[i])
-    print(f"prediction: {np.dot(X_train[i], w_final) + b_final:0.2f}, target value: {y_train[i]}")
 
-checking_gradient_descent(cost_history, predicted_values, actual_values)
+y_pred = np.zeros(m)
+
+for i in range(m):
+    y_pred[i] = pred_func(X_train[i], w_final, b_final)
+
+print('Score of the model : ',r2_score(y_train, y_pred))

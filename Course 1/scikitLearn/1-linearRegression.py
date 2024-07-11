@@ -7,7 +7,7 @@ import os
 
 # get csv path
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, 'advertising.csv')
+csv_path = os.path.join(script_dir, 'data/advertising.csv')
 
 # get data from csv through pandas
 data = pd.read_csv(csv_path)
