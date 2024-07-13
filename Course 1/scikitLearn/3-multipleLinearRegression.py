@@ -2,6 +2,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 import os
@@ -15,8 +16,14 @@ data['Extracurricular Activities'] = data['Extracurricular Activities'].map({'Ye
 
 indpdnt_vars = ['Hours Studied','Previous Scores','Extracurricular Activities','Sleep Hours','Sample Question Papers Practiced']
 
-x_train = data[indpdnt_vars].to_numpy()
-y_train = np.array(data['Performance Index'])
+train_set, test_set = train_test_split(data, test_size=0.2, random_state=42)
+
+
+x_train = train_set[indpdnt_vars].to_numpy()
+y_train = np.array(train_set['Performance Index'])
+
+x_test = test_set[indpdnt_vars].to_numpy()
+y_test = np.array(test_set['Performance Index'])
 
 def train_linear_model(x, y):
     model = LinearRegression()
@@ -36,9 +43,12 @@ def train_polynomial_model(x_train, y_train, deg):
 
     return model
 
-
 model1 = train_linear_model(x_train, y_train)
 model2 = train_polynomial_model(x_train, y_train, 6)
 
 print('Linear model score',r2_score(y_train, model1.predict(x_train)))
 print('polynomial model score',r2_score(y_train, model2.predict(x_train)))
+
+
+print('Linear model score on test set',r2_score(y_test, model1.predict(x_test)))
+print('polynomial model score',r2_score(y_test, model2.predict(x_test)))
