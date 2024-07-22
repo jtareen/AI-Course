@@ -4,10 +4,8 @@ import os
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, 'car_data.csv')
 
-data = pd.read_csv(csv_path)
+data = pd.read_csv("e:/Courses/AI deeplearning.AI/Course 1/scikitLearn/data/car_data.csv")
 
 data['Gender'] = data['Gender'].apply(lambda x: 1 if x == 'Male' else 0)
 

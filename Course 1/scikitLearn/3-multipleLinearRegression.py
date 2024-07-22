@@ -33,7 +33,8 @@ x_test = test_set[indpdnt_vars].to_numpy()
 y_test = np.array(test_set['Performance Index'])
 
 # scale function
-def scale_data(x):
+def scale_data(x_train):
+    x = x_train.copy()
     # initialize the standard scaler
     scaler = StandardScaler()
 
@@ -65,14 +66,15 @@ def train_polynomial_model(x_train, y_train, deg):
     return model
 
 # scale the train data
-x_scaled = scale_data(x_train)
+x_train_scaled = scale_data(x_train)
+x_test_scaled = scale_data(x_test)
 
 # train models
-model1 = train_linear_model(x_scaled, y_train)
-model2 = train_polynomial_model(x_scaled, y_train, 6)
+model1 = train_linear_model(x_train_scaled, y_train)
+print('Linear model score',r2_score(y_train, model1.predict(x_train_scaled)))
+print('Linear model score on test set',r2_score(y_test, model1.predict(x_test_scaled)))
 
-print('Linear model score',r2_score(y_train, model1.predict(x_train)))
-print('polynomial model score',r2_score(y_train, model2.predict(x_train)))
 
-print('Linear model score on test set',r2_score(y_test, model1.predict(x_test)))
-print('polynomial model score',r2_score(y_test, model2.predict(x_test)))
+model2 = train_polynomial_model(x_train_scaled, y_train, 2)
+print('polynomial model score',r2_score(y_train, model2.predict(x_train_scaled)))
+print('polynomial model score',r2_score(y_test, model2.predict(x_test_scaled)))
