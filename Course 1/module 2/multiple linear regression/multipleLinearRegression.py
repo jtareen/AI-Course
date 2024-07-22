@@ -112,3 +112,9 @@ for i in range(m):
     y_pred[i] = pred_func(X_train[i], w_final, b_final)
 
 print('Score of the model : ',r2_score(y_train, y_pred))
+
+plt.scatter(x=y_pred, y=y_train, label="predicted vs actual values")
+plt.title("comparison between predicte values and actual values")
+plt.xlabel("actual values")
+plt.ylabel("predicted values")
+plt.show()
